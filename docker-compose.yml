@@ -10,26 +10,11 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ${PWD}/..:/var/www/html
+      - ${PWD}/src:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - php_campaigns-sync
-      - postgres_campaigns-sync
-    networks:
-      - uploader
-
-  db:
-    image: postgres:14.2-alpine
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./postgres/data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=uploader
-      - POSTGRES_USER=uploader_admin
-      - POSTGRES_PASSWORD=12qwaszx
+      - php
+      - db
     networks:
       - uploader
 

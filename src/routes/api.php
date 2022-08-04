@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/upload', function (Request $request) {
+  $file = $request->file('file');
+
+  if (blank($file)) {
+    return response()->json(['message' => 'file is required'], 400);
+  }
+
+  $storageFile = Storage::disk('public')->putFile('', $file);
+
+  if(!$storageFile) {
+    return response()->json(['message' => 'upload error'], 500);
+  }
+
+  return response()->json(['url' => env('APP_URL') . '/storage/' . $storageFile]);
 });
