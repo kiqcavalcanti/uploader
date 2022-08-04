@@ -1,0 +1,16 @@
+src/storage/*.key
+src/vendor
+src/.env
+.env
+src/.env.backup
+src/.phpunit.result.cache
+src/Homestead.json
+src/Homestead.yaml
+src/auth.json
+src/npm-debug.log
+src/yarn-error.log
+.idea
+src/.idea
+src/.vscode
+.vscode
+postgres/data
