@@ -12,6 +12,8 @@ services:
       - ${PWD}/src:/var/www/html
     ports:
       - "9000:9000"
+    networks:
+      - uploader
 
   nginx:
     image: nginx:stable-alpine
@@ -27,7 +29,9 @@ services:
 
   install-dependencies:
     build:
-      context: ./php-fpm
+      context: ./dependencies
     volumes:
       - ${PWD}/src:/var/www/html
-    command: bash -c "composer install --no-interaction && php artisan storage:link"
+    command: bash -c "composer install --no-interaction && php artisan storage:link --force"
+    depends_on:
+      - php
